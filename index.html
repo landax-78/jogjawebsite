@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Luas Trapesium</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Hitung Luas Trapesium</h2>
+        <form id="trapesiumForm">
+            <div class="input-group">
+                <label for="sisi_a">Panjang Sisi Sejajar 'a' (cm):</label>
+                <input type="number" id="sisi_a" step="0.01" min="0" required placeholder="Contoh: 10">
+            </div>
+            <div class="input-group">
+                <label for="sisi_b">Panjang Sisi Sejajar 'b' (cm):</label>
+                <input type="number" id="sisi_b" step="0.01" min="0" required placeholder="Contoh: 15">
+            </div>
+            <div class="input-group">
+                <label for="tinggi">Tinggi 't' (cm):</label>
+                <input type="number" id="tinggi" step="0.01" min="0" required placeholder="Contoh: 8">
+            </div>
+            <button type="submit">Hitung Luas</button>
+        </form>
+
+        <div id="resultBox" class="result-box" style="display: none;">
+            <p><span class="label">Panjang Sisi a:</span> <span id="display_sisi_a" class="value"></span> cm</p>
+            <p><span class="label">Panjang Sisi b:</span> <span id="display_sisi_b" class="value"></span> cm</p>
+            <p><span class="label">Tinggi t:</span> <span id="display_tinggi" class="value"></span> cm</p>
+            <p class="luas-text">Luas Trapesium: <strong id="display_luas"></strong> cm²</p>
+        </div>
+
+        <p id="errorMessage" class="error-message" style="display: none;"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('trapesiumForm');
+            const sisiAInput = document.getElementById('sisi_a');
+            const sisiBInput = document.getElementById('sisi_b');
+            const tinggiInput = document.getElementById('tinggi');
+
+            const resultBox = document.getElementById('resultBox');
+            const displaySisiA = document.getElementById('display_sisi_a');
+            const displaySisiB = document.getElementById('display_sisi_b');
+            const displayTinggi = document.getElementById('display_tinggi');
+            const displayLuas = document.getElementById('display_luas');
+            const errorMessage = document.getElementById('errorMessage');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                resultBox.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                const sisiA = parseFloat(sisiAInput.value);
+                const sisiB = parseFloat(sisiBInput.value);
+                const tinggi = parseFloat(tinggiInput.value);
+
+                if (isNaN(sisiA) || isNaN(sisiB) || isNaN(tinggi) || sisiA < 0 || sisiB < 0 || tinggi < 0) {
+                    errorMessage.textContent = 'Input tidak valid. Harap masukkan angka positif untuk semua nilai.';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+
+                const luas = 0.5 * (sisiA + sisiB) * tinggi;
+
+                displaySisiA.textContent = sisiA.toFixed(2);
+                displaySisiB.textContent = sisiB.toFixed(2);
+                displayTinggi.textContent = tinggi.toFixed(2);
+                displayLuas.textContent = luas.toFixed(2);
+                resultBox.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
